@@ -3,7 +3,7 @@ import "./brand.component.css";
 
 class BrandComponent extends Component {
   render() {
-    return <div>netflixroulette</div>;
+    return <div className="font-weight-bold text-danger">netflixroulette</div>;
   }
 }
 export default BrandComponent;

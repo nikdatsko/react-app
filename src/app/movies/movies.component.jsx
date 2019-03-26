@@ -6,13 +6,39 @@ class MoviesComponent extends Component {
     super();
   }
   render() {
+    const movies = [
+      {
+        title: "Kill Bill",
+        bg: "warning"
+      },
+      {
+        title: "Pulp fiction",
+        bg: "info"
+      },
+      {
+        title: "Jackie Brown",
+        bg: "danger"
+      },
+      {
+        title: "Reservoir dogs",
+        bg: "success"
+      },
+      {
+        title: "Four rooms",
+        bg: "primary"
+      },
+      {
+        title: "Django Unchained",
+        bg: "dark"
+      }
+    ];
     return (
-      <div>
-        <MovieComponent title="Kill Bill" />
-        <MovieComponent title="Pulp fiction" />
-        <MovieComponent title="Jackie Brown" />
-        <MovieComponent title="Reservoir dogs" />
-        <MovieComponent title="Four rooms" />
+      <div className="d-flex flex-wrap pt-4 px-2">
+        {movies.map((movie, i) => (
+          <div className="col-4 mb-4" key={i}>
+            <MovieComponent title={movie.title} bg={movie.bg} />
+          </div>
+        ))}
       </div>
     );
   }

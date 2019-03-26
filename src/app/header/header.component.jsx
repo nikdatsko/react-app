@@ -1,25 +1,14 @@
 import React, { Component } from "react";
 import "./header.component.css";
 import BrandComponent from "../brand/brand.component";
+import SearchFormComponent from "../search-form/search-form.component";
 
 class HeaderComponent extends Component {
   render() {
     return (
-      <header className="header">
+      <header className="bg-dark text-light px-5 pt-2 pb-4">
         <BrandComponent />
-
-        <form>
-          <legend>Find your movie</legend>
-          <fieldset>
-            <input type="search" placeholder="Search" />
-            <div>
-              <span>Search by</span>
-              <button type="button">Title</button>
-              <button type="button">Genre</button>
-            </div>
-            <input type="submit" value="Search" />
-          </fieldset>
-        </form>
+        <SearchFormComponent />
       </header>
     );
   }

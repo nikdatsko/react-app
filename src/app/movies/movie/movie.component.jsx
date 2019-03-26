@@ -6,7 +6,12 @@ class MovieComponent extends Component {
   }
 
   render() {
-    return <div>{this.props.title}</div>;
+    return (
+      <div>
+        <div className={`bg-${this.props.bg} p-5`} />
+        <div>{this.props.title}</div>
+      </div>
+    );
   }
 }
 export default MovieComponent;
