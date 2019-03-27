@@ -5,6 +5,9 @@ module.exports = {
   entry: {
     main: "./src/index.js"
   },
+  resolve: {
+    extensions: [".js", ".jsx"]
+  },
   output: {
     path: path.join(__dirname, "dist"),
     publicPath: "/",
