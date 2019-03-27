@@ -2,9 +2,26 @@ import React, { Component } from "react";
 import "./search-form.component.css";
 
 class SearchFormComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { error: false };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event) {
+    this.setState(() => ({
+      error: true
+    }));
+    event.preventDefault();
+  }
+
   render() {
+    if (this.state.error) {
+      // Simulate a JS error
+      throw new Error("Crashed!");
+    }
     return (
-      <form className="pt-4">
+      <form className="pt-4" onSubmit={this.handleSubmit}>
         <legend className="text-uppercase">Find your movie</legend>
         <fieldset>
           <input

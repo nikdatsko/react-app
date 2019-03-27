@@ -4,6 +4,7 @@ import HeaderComponent from "./header/header.component";
 import FooterComponent from "./footer/footer.component";
 import StatusStripeComponent from "./status-stripe/status-stripe.component";
 import MoviesComponent from "./movies/movies.component";
+import ErrorBoundary from "./error-boundary";
 
 class App extends Component {
   constructor() {
@@ -13,13 +14,12 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <HeaderComponent />
-
-        <StatusStripeComponent />
-
-        <MoviesComponent />
-
-        <FooterComponent />
+        <ErrorBoundary>
+          <HeaderComponent />
+          <StatusStripeComponent />
+          <MoviesComponent />
+          <FooterComponent />
+        </ErrorBoundary>
       </div>
     );
   }
