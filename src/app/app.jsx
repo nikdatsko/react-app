@@ -9,6 +9,34 @@ import ErrorBoundary from "./error-boundary";
 class App extends Component {
   constructor() {
     super();
+    this.state = {
+      movies: [
+        {
+          title: "Kill Bill",
+          bg: "warning"
+        },
+        {
+          title: "Pulp fiction",
+          bg: "info"
+        },
+        {
+          title: "Jackie Brown",
+          bg: "danger"
+        },
+        {
+          title: "Reservoir dogs",
+          bg: "success"
+        },
+        {
+          title: "Four rooms",
+          bg: "primary"
+        },
+        {
+          title: "Django Unchained",
+          bg: "dark"
+        }
+      ]
+    };
   }
 
   render() {
@@ -16,8 +44,8 @@ class App extends Component {
       <div className="container">
         <ErrorBoundary>
           <HeaderComponent />
-          <StatusStripeComponent />
-          <MoviesComponent />
+          <StatusStripeComponent count={this.state.movies.length} />
+          <MoviesComponent movies={this.state.movies} />
           <FooterComponent />
         </ErrorBoundary>
       </div>
