@@ -37,13 +37,19 @@ class App extends Component {
         }
       ]
     };
+    this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
+  }
+
+  handleSearchSubmit(event) {
+    console.log(event.target.elements.search.value);
+    event.preventDefault();
   }
 
   render() {
     return (
       <div className="container">
         <ErrorBoundary>
-          <HeaderComponent />
+          <HeaderComponent handleSearchSubmit={this.handleSearchSubmit} />
           <StatusStripeComponent count={this.state.movies.length} />
           <MoviesComponent movies={this.state.movies} />
           <FooterComponent />

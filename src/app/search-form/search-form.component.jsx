@@ -4,22 +4,18 @@ import "./search-form.component.css";
 class SearchFormComponent extends Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
   }
 
   render() {
     return (
-      <form className="pt-4" onSubmit={this.handleSubmit}>
+      <form className="pt-4" onSubmit={this.props.handleSearchSubmit}>
         <legend className="text-uppercase">Find your movie</legend>
         <fieldset>
           <input
             className="form-control mb-2"
             type="search"
             placeholder="Search"
+            name="search"
           />
           <div className="d-flex justify-content-between align-items-center">
             <div className="d-flex align-items-center">
