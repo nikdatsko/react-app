@@ -8,9 +8,9 @@ class MoviesComponent extends Component {
   render() {
     return (
       <div className="d-flex flex-wrap pt-4 px-2">
-        {this.props.movies.map((movie, i) => (
-          <div className="col-4 mb-4" key={i}>
-            <MovieComponent title={movie.title} bg={movie.bg} />
+        {this.props.movies.map(movie => (
+          <div className="col-4 col-lg-3 mb-4" key={movie.id}>
+            <MovieComponent {...movie} />
           </div>
         ))}
       </div>
