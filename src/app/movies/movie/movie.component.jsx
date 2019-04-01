@@ -18,7 +18,7 @@ class MovieComponent extends Component {
             {this.props.title}
           </span>
           <span className="border border-secondary rounded small px-2">
-            {this.props.date}
+            {this.props.release_date}
           </span>
         </div>
         <div className="small text-secondary">{this.props.genre}</div>

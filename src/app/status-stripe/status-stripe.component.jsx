@@ -12,8 +12,20 @@ class StatusStripeComponent extends Component {
         </span>
         <div>
           <span>Sort by</span>
-          <a className="mx-4">release date</a>
-          <a className="text-danger">rating</a>
+          {this.props.sortByProps.map(prop => (
+            <a
+              href="#"
+              role="button"
+              key={prop}
+              className={
+                "ml-4 " +
+                (prop === this.props.sortBy ? "text-danger" : "text-dark")
+              }
+              onClick={e => this.props.handleSortByChange(e, prop)}
+            >
+              {prop.replace("_", " ")}
+            </a>
+          ))}
         </div>
       </div>
     );

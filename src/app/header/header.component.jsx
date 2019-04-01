@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./header.component.css";
 import BrandComponent from "../brand/brand.component";
 import SearchFormComponent from "../search-form/search-form.component";
 
@@ -13,6 +12,9 @@ class HeaderComponent extends Component {
         <BrandComponent />
         <SearchFormComponent
           handleSearchSubmit={this.props.handleSearchSubmit}
+          handleSearchByChange={this.props.handleSearchByChange}
+          searchByProps={this.props.searchByProps}
+          searchBy={this.props.searchBy}
         />
       </header>
     );

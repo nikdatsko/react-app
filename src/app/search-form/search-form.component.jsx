@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./search-form.component.css";
 
 class SearchFormComponent extends Component {
   constructor(props) {
@@ -20,12 +19,21 @@ class SearchFormComponent extends Component {
           <div className="d-flex justify-content-between align-items-center">
             <div className="d-flex align-items-center">
               <span className="text-uppercase">Search by</span>
-              <button className="btn btn-sm btn-danger mx-2" type="button">
-                Title
-              </button>
-              <button className="btn btn-sm btn-secondary" type="button">
-                Genre
-              </button>
+              {this.props.searchByProps.map(prop => (
+                <button
+                  key={prop}
+                  className={
+                    "btn btn-sm ml-2 " +
+                    (prop === this.props.searchBy
+                      ? "btn-danger"
+                      : "btn-secondary")
+                  }
+                  type="button"
+                  onClick={() => this.props.handleSearchByChange(prop)}
+                >
+                  <span className="text-capitalize">{prop}</span>
+                </button>
+              ))}
             </div>
             <input className="btn btn-danger" type="submit" value="Search" />
           </div>
