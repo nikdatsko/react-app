@@ -2,4 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./app/app.jsx";
 
-ReactDOM.render(<App />, document.getElementById("app"));
+const root = document.getElementById("root");
+function renderToDOM() {
+  ReactDOM.render(<App />, root || document.createElement("DIV"));
+}
+renderToDOM();
+export { renderToDOM };
