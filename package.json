@@ -4,21 +4,23 @@
   "description": "React app",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open --mode development --config webpack.dev.config.js",
+    "start":
+      "webpack-dev-server --open --mode development --config webpack.dev.config.js",
     "build": "webpack --mode production",
-    "build:dev": "rm -rf dist && webpack --mode development --config webpack.dev.config.js",
-    "build:prod": "rm -rf dist && webpack --mode production --config webpack.prod.config.js",
+    "build:dev":
+      "rm -rf dist && webpack --mode development --config webpack.dev.config.js",
+    "build:prod":
+      "rm -rf dist && webpack --mode production --config webpack.prod.config.js",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage --colors"
+    "test:coverage": "jest --coverage --colors",
+    "cypress": "cypress open"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nikdatsko/react-app.git"
   },
-  "keywords": [
-    "react"
-  ],
+  "keywords": ["react"],
   "author": "Nik Datsko",
   "license": "ISC",
   "bugs": {
@@ -35,18 +37,14 @@
     "react-scripts": "^2.1.5",
     "redux": "^4.0.1"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
+  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"],
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "babel-jest": "^24.5.0",
     "babel-loader": "^8.0.5",
+    "cypress": "^3.2.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.11.2",
     "html-loader": "^0.5.5",
