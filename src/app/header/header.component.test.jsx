@@ -6,7 +6,7 @@ describe("HeaderComponent", () => {
   it("renders without crashing", () => {
     const div = document.createElement("div");
     ReactDOM.render(
-      <HeaderComponent searchByProps={["title", "genre"]} />,
+      <HeaderComponent searchByProps={["title", "genres"]} />,
       div
     );
     expect(div).toMatchSnapshot();

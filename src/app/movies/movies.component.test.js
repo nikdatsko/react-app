@@ -9,60 +9,60 @@ describe("MoviesComponent", () => {
       {
         id: "1",
         title: "Kill Bill",
-        image:
+        poster_path:
           "//upload.wikimedia.org/wikipedia/en/2/2c/Kill_Bill_Volume_1.png",
         release_date: "2003",
-        genre: "Action & Adventure",
+        genres: ["Action & Adventure"],
         rating: 3,
         director: "Quentin Tarantino"
       },
       {
         id: "2",
         title: "Pulp fiction",
-        image:
+        poster_path:
           "https://upload.wikimedia.org/wikipedia/en/3/3b/Pulp_Fiction_%281994%29_poster.jpg",
         release_date: "1994",
-        genre: "Oscar-winning movies",
+        genres: ["Oscar-winning movies"],
         rating: 5,
         director: "Quentin Tarantino"
       },
       {
         id: "3",
         title: "Jackie Brown",
-        image:
+        poster_path:
           "https://upload.wikimedia.org/wikipedia/en/8/89/Jackie_Brown_%281997%29.png",
         release_date: "1997",
-        genre: "Dramas",
+        genres: ["Dramas"],
         rating: 1,
         director: "Quentin Tarantino"
       },
       {
         id: "4",
         title: "Reservoir dogs",
-        image:
+        poster_path:
           "https://upload.wikimedia.org/wikipedia/en/0/01/Reservoir_Dogs.png",
         release_date: "1992",
-        genre: "Independant movies",
+        genres: ["Independant movies"],
         rating: 2,
         director: "Quentin Tarantino"
       },
       {
         id: "5",
         title: "Four rooms",
-        image:
+        poster_path:
           "https://upload.wikimedia.org/wikipedia/en/c/c8/Four_rooms_ver2.jpg",
         release_date: "1995",
-        genre: "Comedies",
+        genres: ["Comedies"],
         rating: 3,
         director: "Quentin Tarantino"
       },
       {
         id: "6",
         title: "Django Unchained",
-        image:
+        poster_path:
           "https://upload.wikimedia.org/wikipedia/en/8/8b/Django_Unchained_Poster.jpg",
         release_date: "2012",
-        genre: "Dramas",
+        genres: ["Dramas"],
         rating: 4,
         director: "Quentin Tarantino"
       }
