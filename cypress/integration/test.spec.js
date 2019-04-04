@@ -13,6 +13,6 @@ describe("App", () => {
 
   it("Shows correct movies count", () => {
     cy.get('[type="submit"]').click();
-    cy.get(".container").should("contain", "2 movies found");
+    cy.get("#root").should("contain", "2 movies found");
   });
 });

@@ -88,7 +88,6 @@ class App extends Component {
     const search = event.target.elements.search.value.toLowerCase();
     this.setState(state => {
       return {
-        ...state,
         search,
         movies: this.movies
           .filter(movie => movie[state.searchBy].toLowerCase().match(search))
@@ -101,7 +100,6 @@ class App extends Component {
   handleSearchByChange(searchBy) {
     this.setState(state => {
       return {
-        ...state,
         searchBy,
         movies: this.movies
           .filter(movie => movie[searchBy].toLowerCase().match(state.search))
@@ -113,7 +111,6 @@ class App extends Component {
   handleSortByChange(event, sortBy) {
     this.setState(state => {
       return {
-        ...state,
         sortBy,
         movies: this.movies
           .filter(movie =>
@@ -127,24 +124,22 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container">
-        <ErrorBoundary>
-          <HeaderComponent
-            handleSearchSubmit={this.handleSearchSubmit}
-            handleSearchByChange={this.handleSearchByChange}
-            searchByProps={this.searchByProps}
-            searchBy={this.state.searchBy}
-          />
-          <StatusStripeComponent
-            handleSortByChange={this.handleSortByChange}
-            count={this.state.movies.length}
-            sortByProps={this.sortByProps}
-            sortBy={this.state.sortBy}
-          />
-          <MoviesComponent movies={this.state.movies} />
-          <FooterComponent />
-        </ErrorBoundary>
-      </div>
+      <ErrorBoundary>
+        <HeaderComponent
+          handleSearchSubmit={this.handleSearchSubmit}
+          handleSearchByChange={this.handleSearchByChange}
+          searchByProps={this.searchByProps}
+          searchBy={this.state.searchBy}
+        />
+        <StatusStripeComponent
+          handleSortByChange={this.handleSortByChange}
+          count={this.state.movies.length}
+          sortByProps={this.sortByProps}
+          sortBy={this.state.sortBy}
+        />
+        <MoviesComponent movies={this.state.movies} />
+        <FooterComponent />
+      </ErrorBoundary>
     );
   }
 }
