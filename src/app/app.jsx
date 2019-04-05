@@ -12,46 +12,57 @@ class App extends Component {
   constructor() {
     super();
     this.searchByProps = ["title", "genres"];
-    this.sortByProps = ["release_date", "rating"];
+    this.sortByProps = ["release_date", "vote_average"];
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
     this.handleSearchByChange = this.handleSearchByChange.bind(this);
     this.handleSortByChange = this.handleSortByChange.bind(this);
   }
 
-  componentDidMount() {
-    this.props.loadMovies();
-    this.props.setSearchBy(this.searchByProps[0]);
+  componentWillMount() {
+    this.props.loadMovies({
+      searchBy: this.searchByProps[0]
+    });
   }
 
   handleSearchSubmit(event) {
     event.preventDefault();
-    if (this.props.loading) {
+    const search = event.target.elements.search.value.toLowerCase();
+    if (search === this.props.search) {
       return;
     }
-    const search = event.target.elements.search.value.toLowerCase();
     this.props.loadMovies({
-      search,
+      search: search,
       searchBy: this.props.searchBy,
-      sortBy: this.props.sortBy
+      sortBy: this.props.sortBy,
+      sortOrder: this.props.sortOrder
     });
   }
 
   handleSearchByChange(searchBy) {
+    if (searchBy === this.props.searchBy) {
+      return;
+    }
     this.props.loadMovies({
       search: this.props.search,
       sortBy: this.props.sortBy,
-      searchBy
+      searchBy: searchBy,
+      sortOrder: this.props.sortOrder
     });
   }
 
   handleSortByChange(event, sortBy) {
+    event.preventDefault();
+    let sortOrder = this.props.sortOrder || "desc";
+    if (sortBy === this.props.sortBy) {
+      sortOrder = this.props.sortOrder === "desc" ? "asc" : "desc";
+    }
+
     this.props.loadMovies({
       search: this.props.search,
       searchBy: this.props.searchBy,
-      sortOrder: this.props.sortOrder === "desc" ? "asc" : "desc",
-      sortBy
+      sortOrder: sortOrder,
+      sortBy: sortBy
     });
-    event.preventDefault();
   }
 
   render() {
@@ -82,8 +93,8 @@ const mapStatesToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadMovies: params => dispatch(fromStore.LoadMovies(params)),
-    setSearchBy: searchBy => dispatch(fromStore.SetSearchBy(searchBy))
+    loadMovies: params =>
+      dispatch(fromStore.LoadMovies({ ...params, limit: 12 }))
   };
 };
 

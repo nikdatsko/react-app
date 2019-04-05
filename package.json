@@ -4,10 +4,13 @@
   "description": "React app",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open --mode development --config webpack.dev.config.js",
+    "start":
+      "webpack-dev-server --open --mode development --config webpack.dev.config.js",
     "build": "webpack --mode production",
-    "build:dev": "rm -rf dist && webpack --mode development --config webpack.dev.config.js",
-    "build:prod": "rm -rf dist && webpack --mode production --config webpack.prod.config.js",
+    "build:dev":
+      "rm -rf dist && webpack --mode development --config webpack.dev.config.js",
+    "build:prod":
+      "rm -rf dist && webpack --mode production --config webpack.prod.config.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage --colors",
@@ -17,9 +20,7 @@
     "type": "git",
     "url": "git+https://github.com/nikdatsko/react-app.git"
   },
-  "keywords": [
-    "react"
-  ],
+  "keywords": ["react"],
   "author": "Nik Datsko",
   "license": "ISC",
   "bugs": {
@@ -36,15 +37,9 @@
     "react-router": "^4.3.1",
     "react-scripts": "^2.1.5",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0",
-    "reselect": "^4.0.0"
+    "redux-thunk": "^2.3.0"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
+  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"],
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
