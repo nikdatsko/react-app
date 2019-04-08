@@ -6,10 +6,12 @@ const MovieComponent = props => (
     <div className="d-flex justify-content-between align-items-start">
       <span className="text-uppercase font-weight-bold">{props.title}</span>
       <span className="border border-secondary rounded small px-2">
-        {props.release_date.split("-")[0]}
+        {props.release_date && props.release_date.split("-")[0]}
       </span>
     </div>
-    <div className="small text-secondary">{props.genres.join(", ")}</div>
+    <div className="small text-secondary">
+      {props.genres && props.genres.join(", ")}
+    </div>
   </div>
 );
 export default MovieComponent;

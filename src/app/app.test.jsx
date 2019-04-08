@@ -1,14 +1,18 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { shallow, mount } from "enzyme";
 import ReactDOM from "react-dom";
 import App from "./app";
 import HeaderComponent from "./header/header.component";
 import StatusStripeComponent from "./status-stripe/status-stripe.component";
 import MoviesComponent from "./movies/movies.component";
 import FooterComponent from "./footer/footer.component";
+import configureStore from "redux-mock-store";
+import { Provider } from "react-redux";
+import thunk from "redux-thunk";
+import * as fromStore from "./store";
 
 describe("App", () => {
-  let wrapper;
+  let wrapper, store, loadMovies;
   const movies = [
     {
       id: "1",
@@ -71,62 +75,56 @@ describe("App", () => {
       director: "Quentin Tarantino"
     }
   ];
+  const initialState = {
+    movies: {
+      data: {},
+      total: null,
+      offset: 0,
+      sortBy: null,
+      sortOrder: null,
+      search: "",
+      searchBy: null,
+      filter: null,
+      limit: null
+    }
+  };
+  const mockStore = configureStore([thunk]);
 
   beforeEach(() => {
-    wrapper = shallow(<App />);
-    wrapper.instance().movies = [...movies];
+    store = mockStore(initialState);
+    store.dispatch = jest.fn();
+    wrapper = mount(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
   });
 
-  it("Should render a HeaderComponent", () => {
-    expect(wrapper.find(HeaderComponent).length).toBe(1);
-  });
+  describe("App components rendering", () => {
+    it("Should render the connected(SMART) component", () => {
+      expect(wrapper.find(App).length).toEqual(1);
+    });
 
-  it("Should render a StatusStripeComponent", () => {
-    expect(wrapper.find(StatusStripeComponent).length).toBe(1);
-  });
+    it("Should render a HeaderComponent", () => {
+      expect(wrapper.find(HeaderComponent).length).toBe(1);
+    });
 
-  it("Should render a MoviesComponent", () => {
-    expect(wrapper.find(MoviesComponent).length).toBe(1);
-  });
+    it("Should render a StatusStripeComponent", () => {
+      expect(wrapper.find(StatusStripeComponent).length).toBe(1);
+    });
 
-  it("Should render a FooterComponent", () => {
-    expect(wrapper.find(FooterComponent).length).toBe(1);
+    it("Should render a MoviesComponent", () => {
+      expect(wrapper.find(MoviesComponent).length).toBe(1);
+    });
+
+    it("Should render a FooterComponent", () => {
+      expect(wrapper.find(FooterComponent).length).toBe(1);
+    });
   });
 
   describe("App methods", () => {
-    const event = {
-      target: {
-        elements: {
-          search: {
-            value: "A"
-          }
-        }
-      },
-      preventDefault: () => {}
-    };
-
-    it("Should set correct state on Search Submit", () => {
-      wrapper.instance().handleSearchSubmit(event);
-
-      expect(wrapper.state("movies").length).toEqual(2);
-      expect(wrapper.state("search")).toEqual("a");
-    });
-
-    it("Should set correct state on SearchBy Change", () => {
-      wrapper.instance().handleSearchSubmit(event);
-      wrapper.instance().handleSearchByChange("genres");
-
-      expect(wrapper.state("movies").length).toEqual(5);
-      expect(wrapper.state("searchBy")).toEqual("genres");
-    });
-
-    it("Should set correct state on SortBy Change", () => {
-      wrapper.instance().handleSearchSubmit(event);
-      expect(wrapper.state("movies")[0].title).toEqual("Jackie Brown");
-
-      wrapper.instance().handleSortByChange(event, "rating");
-      expect(wrapper.state("movies")[0].title).toEqual("Django Unchained");
-      expect(wrapper.state("sortBy")).toEqual("rating");
+    it("Should dispatch loadMovies action when mounted", () => {
+      expect(store.dispatch).toHaveBeenCalled();
     });
   });
 });
