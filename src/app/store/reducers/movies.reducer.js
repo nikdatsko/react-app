@@ -1,4 +1,5 @@
 import * as fromActions from "../actions";
+import { ActionType } from "redux-promise-middleware";
 
 export const initialState = {
   data: {},
@@ -14,8 +15,13 @@ export const initialState = {
 
 export const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case fromActions.LOAD_MOVIES_SUCCESS:
-      const hashedData = payload.data.reduce(
+    case `LOAD_MOVIES_${ActionType.Pending}`:
+      return {
+        ...state
+      };
+
+    case `LOAD_MOVIES_${ActionType.Fulfilled}`:
+      const hashedData = payload.data.data.reduce(
         (acc, item) => ({
           ...acc,
           [item.id]: item
@@ -24,11 +30,17 @@ export const reducer = (state = initialState, { type, payload }) => {
       );
       return {
         ...state,
-        ...payload,
-        data: !payload.offset ? hashedData : { ...state.data, ...hashedData }
+        ...payload.data,
+        ...payload.config.params,
+        data: hashedData
       };
 
-    case fromActions.LOAD_LOCAL_STORE:
+    case `LOAD_MOVIES_${ActionType.Rejected}`:
+      return {
+        ...state
+      };
+
+    case "LOAD_LOCAL_STORE":
       return {
         ...state,
         ...payload
