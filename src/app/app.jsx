@@ -11,6 +11,7 @@ import * as fromStore from "./store";
 class App extends Component {
   constructor() {
     super();
+    this.moviesStoreKey = "moviesStore";
     this.searchByProps = ["title", "genres"];
     this.sortByProps = ["release_date", "vote_average"];
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
@@ -19,9 +20,19 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.props.loadMovies({
-      searchBy: this.searchByProps[0]
-    });
+    const moviesStore = localStorage.getItem(this.moviesStoreKey);
+    if (!moviesStore) {
+      this.props.loadMovies({
+        searchBy: this.searchByProps[0]
+      });
+    } else {
+      this.props.loadLocalStore(JSON.parse(moviesStore));
+    }
+  }
+
+  componentDidUpdate() {
+    const moviesState = fromStore.store.getState().movies;
+    localStorage.setItem(this.moviesStoreKey, JSON.stringify(moviesState));
   }
 
   handleSearchSubmit(event) {
@@ -73,6 +84,7 @@ class App extends Component {
           handleSearchByChange={this.handleSearchByChange}
           searchByProps={this.searchByProps}
           searchBy={this.props.searchBy}
+          search={this.props.search}
         />
         <StatusStripeComponent
           handleSortByChange={this.handleSortByChange}
@@ -94,7 +106,8 @@ const mapStatesToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadMovies: params =>
-      dispatch(fromStore.LoadMovies({ ...params, limit: 12 }))
+      dispatch(fromStore.LoadMovies({ ...params, limit: 12 })),
+    loadLocalStore: params => dispatch(fromStore.LoadLocalStore({ ...params }))
   };
 };
 

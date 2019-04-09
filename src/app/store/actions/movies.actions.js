@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const LOAD_MOVIES_SUCCESS = "Load movies succees";
+export const LOAD_LOCAL_STORE = "Load local store";
 
 const GET_MOVIES_ENDPOINT = "https://reactjs-cdp.herokuapp.com/movies";
 export const LoadMovies = params => {
@@ -17,5 +18,10 @@ export const LoadMovies = params => {
 
 export const LoadMoviesSuccess = data => ({
   type: LOAD_MOVIES_SUCCESS,
+  payload: data
+});
+
+export const LoadLocalStore = data => ({
+  type: LOAD_LOCAL_STORE,
   payload: data
 });

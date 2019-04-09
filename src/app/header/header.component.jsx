@@ -11,6 +11,7 @@ const HeaderComponent = props => (
         handleSearchByChange={props.handleSearchByChange}
         searchByProps={props.searchByProps}
         searchBy={props.searchBy}
+        search={props.search}
       />
     </div>
   </header>

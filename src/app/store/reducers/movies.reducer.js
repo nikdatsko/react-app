@@ -28,6 +28,12 @@ export const reducer = (state = initialState, { type, payload }) => {
         data: !payload.offset ? hashedData : { ...state.data, ...hashedData }
       };
 
+    case fromActions.LOAD_LOCAL_STORE:
+      return {
+        ...state,
+        ...payload
+      };
+
     default:
       return state;
   }
