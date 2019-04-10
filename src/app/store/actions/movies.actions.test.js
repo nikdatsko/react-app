@@ -8,15 +8,7 @@ jest.mock("axios");
 
 describe("Movies actions", () => {
   const state = {
-    data: {},
-    total: null,
-    offset: 0,
-    sortBy: null,
-    sortOrder: null,
-    search: "",
-    searchBy: null,
-    filter: null,
-    limit: null
+    data: {}
   };
   const mockStore = configureMockStore([thunk, promise]);
 

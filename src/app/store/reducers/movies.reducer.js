@@ -10,14 +10,16 @@ export const initialState = {
   search: "",
   searchBy: null,
   filter: null,
-  limit: null
+  limit: null,
+  loading: false
 };
 
 export const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case `LOAD_MOVIES_${ActionType.Pending}`:
       return {
-        ...state
+        ...state,
+        loading: true
       };
 
     case `LOAD_MOVIES_${ActionType.Fulfilled}`:
@@ -32,12 +34,14 @@ export const reducer = (state = initialState, { type, payload }) => {
         ...state,
         ...payload.data,
         ...payload.config.params,
-        data: hashedData
+        data: hashedData,
+        loading: false
       };
 
     case `LOAD_MOVIES_${ActionType.Rejected}`:
       return {
-        ...state
+        ...state,
+        loading: false
       };
 
     case "LOAD_LOCAL_STORE":
