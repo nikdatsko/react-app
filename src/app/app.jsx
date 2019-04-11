@@ -5,98 +5,110 @@ import FooterComponent from "./footer/footer.component";
 import StatusStripeComponent from "./status-stripe/status-stripe.component";
 import MoviesComponent from "./movies/movies.component";
 import ErrorBoundary from "./error-boundary";
+import { connect } from "react-redux";
+import * as fromStore from "./store";
 
 class App extends Component {
   constructor() {
     super();
-    this.movies = [
-      {
-        id: "1",
-        title: "Kill Bill",
-        image:
-          "//upload.wikimedia.org/wikipedia/en/2/2c/Kill_Bill_Volume_1.png",
-        date: "2003",
-        genre: "Action & Adventure",
-        director: "Quentin Tarantino"
-      },
-      {
-        id: "2",
-        title: "Pulp fiction",
-        image:
-          "https://upload.wikimedia.org/wikipedia/en/3/3b/Pulp_Fiction_%281994%29_poster.jpg",
-        date: "1994",
-        genre: "Oscar-winning movies",
-        director: "Quentin Tarantino"
-      },
-      {
-        id: "3",
-        title: "Jackie Brown",
-        image:
-          "https://upload.wikimedia.org/wikipedia/en/8/89/Jackie_Brown_%281997%29.png",
-        date: "1997",
-        genre: "Dramas",
-        director: "Quentin Tarantino"
-      },
-      {
-        id: "4",
-        title: "Reservoir dogs",
-        image:
-          "https://upload.wikimedia.org/wikipedia/en/0/01/Reservoir_Dogs.png",
-        date: "1992",
-        genre: "Independant movies",
-        director: "Quentin Tarantino"
-      },
-      {
-        id: "5",
-        title: "Four rooms",
-        image:
-          "https://upload.wikimedia.org/wikipedia/en/c/c8/Four_rooms_ver2.jpg",
-        date: "1995",
-        genre: "Comedies",
-        director: "Quentin Tarantino"
-      },
-      {
-        id: "6",
-        title: "Django Unchained",
-        image:
-          "https://upload.wikimedia.org/wikipedia/en/8/8b/Django_Unchained_Poster.jpg",
-        date: "2012",
-        genre: "Dramas",
-        director: "Quentin Tarantino"
-      }
-    ];
-    this.state = {
-      movies: this.movies
-    };
+    this.moviesStoreKey = "moviesStore";
+    this.searchByProps = ["title", "genres"];
+    this.sortByProps = ["release_date", "vote_average"];
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
+    this.handleSearchByChange = this.handleSearchByChange.bind(this);
+    this.handleSortByChange = this.handleSortByChange.bind(this);
+  }
+
+  componentWillMount() {
+    const moviesStore = localStorage.getItem(this.moviesStoreKey);
+    if (!moviesStore) {
+      this.props.loadMovies({
+        searchBy: this.searchByProps[0]
+      });
+    } else {
+      this.props.loadLocalStore(JSON.parse(moviesStore));
+    }
+  }
+
+  componentDidUpdate() {
+    const moviesState = fromStore.store.getState().movies;
+    localStorage.setItem(this.moviesStoreKey, JSON.stringify(moviesState));
   }
 
   handleSearchSubmit(event) {
-    const search = event.target.elements.search.value.toLowerCase();
-    this.setState(state => {
-      return {
-        movies: this.movies.filter(movie => {
-          const title = movie.title.toLowerCase();
-          return title.match(search);
-        })
-      };
-    });
     event.preventDefault();
+    const search = event.target.elements.search.value.toLowerCase();
+    if (search === this.props.search) {
+      return;
+    }
+    this.props.loadMovies({
+      search: search,
+      searchBy: this.props.searchBy,
+      sortBy: this.props.sortBy,
+      sortOrder: this.props.sortOrder
+    });
+  }
+
+  handleSearchByChange(searchBy) {
+    if (searchBy === this.props.searchBy) {
+      return;
+    }
+    this.props.loadMovies({
+      search: this.props.search,
+      sortBy: this.props.sortBy,
+      searchBy: searchBy,
+      sortOrder: this.props.sortOrder
+    });
+  }
+
+  handleSortByChange(event, sortBy) {
+    event.preventDefault();
+    let sortOrder = this.props.sortOrder || "desc";
+    if (sortBy === this.props.sortBy) {
+      sortOrder = this.props.sortOrder === "desc" ? "asc" : "desc";
+    }
+
+    this.props.loadMovies({
+      search: this.props.search,
+      searchBy: this.props.searchBy,
+      sortOrder: sortOrder,
+      sortBy: sortBy
+    });
   }
 
   render() {
     return (
-      <div className="container">
-        <ErrorBoundary>
-          <HeaderComponent handleSearchSubmit={this.handleSearchSubmit} />
-          <StatusStripeComponent count={this.state.movies.length} />
-          <MoviesComponent movies={this.state.movies} />
-          <FooterComponent />
-        </ErrorBoundary>
-      </div>
+      <ErrorBoundary>
+        <HeaderComponent
+          handleSearchSubmit={this.handleSearchSubmit}
+          handleSearchByChange={this.handleSearchByChange}
+          searchByProps={this.searchByProps}
+          searchBy={this.props.searchBy}
+          search={this.props.search}
+        />
+        <StatusStripeComponent
+          handleSortByChange={this.handleSortByChange}
+          count={this.props.total}
+          sortByProps={this.sortByProps}
+          sortBy={this.props.sortBy}
+        />
+        <MoviesComponent movies={this.props.data} />
+        <FooterComponent />
+      </ErrorBoundary>
     );
   }
 }
-export default App;
 
-ReactDOM.render(<App />, document.getElementById("app"));
+const mapStatesToProps = state => {
+  return { ...state.movies };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    loadMovies: params =>
+      dispatch(fromStore.LoadMovies({ ...params, limit: 12 })),
+    loadLocalStore: params => dispatch(fromStore.LoadLocalStore({ ...params }))
+  };
+};
+
+export default connect(mapStatesToProps, mapDispatchToProps)(App);

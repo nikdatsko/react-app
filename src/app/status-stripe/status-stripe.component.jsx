@@ -1,22 +1,34 @@
 import React, { Component } from "react";
 
-class StatusStripeComponent extends Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (
-      <div className="d-flex justify-content-between align-items-center bg-light text-dark px-5 py-1 font-weight-bold">
-        <span>
-          {this.props.count} movie{this.props.count !== 1 ? "s" : ""} found
-        </span>
-        <div>
-          <span>Sort by</span>
-          <a className="mx-4">release date</a>
-          <a className="text-danger">rating</a>
-        </div>
+const StatusStripeComponent = props => (
+  <div className="bg-light text-dark py-1 font-weight-bold">
+    <div className="container d-flex justify-content-between align-items-center">
+      <span>
+        {!props.count && props.count !== 0
+          ? "searching..."
+          : `${props.count} movie${props.count !== 1 ? "s" : ""} found`}
+      </span>
+      <div>
+        <span>Sort by</span>
+        {props.sortByProps.map(prop => {
+          const visibleProp =
+            prop === "vote_average" ? "rating" : prop.replace("_", " ");
+          return (
+            <a
+              href="#"
+              role="button"
+              key={prop}
+              className={
+                "ml-4 " + (prop === props.sortBy ? "text-danger" : "text-dark")
+              }
+              onClick={e => props.handleSortByChange(e, prop)}
+            >
+              {visibleProp}
+            </a>
+          );
+        })}
       </div>
-    );
-  }
-}
+    </div>
+  </div>
+);
 export default StatusStripeComponent;
