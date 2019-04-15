@@ -8,12 +8,11 @@ import MoviesComponent from "./movies/movies.component";
 import FooterComponent from "./footer/footer.component";
 import configureStore from "redux-mock-store";
 import { Provider } from "react-redux";
-import { BrowserRouter as Router } from "react-router-dom";
+import { MemoryRouter as Router, Route } from "react-router-dom";
 import thunk from "redux-thunk";
 import * as fromStore from "./store";
 
 describe("App", () => {
-  let wrapper, store, loadMovies;
   const movies = [
     {
       id: "1",
@@ -91,37 +90,22 @@ describe("App", () => {
   };
   const mockStore = configureStore([thunk]);
 
-  beforeEach(() => {
-    store = mockStore(initialState);
-    store.dispatch = jest.fn();
-    wrapper = mount(
+  it("renders without crashing", () => {
+    const div = document.createElement("div");
+    const store = mockStore(initialState);
+    const match = {
+      params: {
+        query: ""
+      }
+    };
+    ReactDOM.render(
       <Provider store={store}>
         <Router>
-          <App />
+          <App match={match} />
         </Router>
-      </Provider>
+      </Provider>,
+      div
     );
-  });
-
-  describe("App components rendering", () => {
-    it("Should render the connected(SMART) component", () => {
-      expect(wrapper.find(App).length).toEqual(1);
-    });
-
-    it("Should render a HeaderComponent", () => {
-      expect(wrapper.find(HeaderComponent).length).toBe(1);
-    });
-
-    it("Should render a StatusStripeComponent", () => {
-      expect(wrapper.find(StatusStripeComponent).length).toBe(1);
-    });
-
-    it("Should render a MoviesComponent", () => {
-      expect(wrapper.find(MoviesComponent).length).toBe(1);
-    });
-
-    it("Should render a FooterComponent", () => {
-      expect(wrapper.find(FooterComponent).length).toBe(1);
-    });
+    expect(div).toMatchSnapshot();
   });
 });
