@@ -8,6 +8,7 @@ import MoviesComponent from "./movies/movies.component";
 import FooterComponent from "./footer/footer.component";
 import configureStore from "redux-mock-store";
 import { Provider } from "react-redux";
+import { BrowserRouter as Router } from "react-router-dom";
 import thunk from "redux-thunk";
 import * as fromStore from "./store";
 
@@ -95,7 +96,9 @@ describe("App", () => {
     store.dispatch = jest.fn();
     wrapper = mount(
       <Provider store={store}>
-        <App />
+        <Router>
+          <App />
+        </Router>
       </Provider>
     );
   });
@@ -119,12 +122,6 @@ describe("App", () => {
 
     it("Should render a FooterComponent", () => {
       expect(wrapper.find(FooterComponent).length).toBe(1);
-    });
-  });
-
-  describe("App methods", () => {
-    it("Should dispatch loadMovies action when mounted", () => {
-      expect(store.dispatch).toHaveBeenCalled();
     });
   });
 });

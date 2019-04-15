@@ -1,4 +1,4 @@
-import * as fromActions from "../actions";
+import * as fromActions from "../actions/movies.actions";
 import { ActionType } from "redux-promise-middleware";
 
 export const initialState = {
