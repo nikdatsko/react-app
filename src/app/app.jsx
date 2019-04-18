@@ -21,11 +21,13 @@ class App extends Component {
 
   componentWillMount() {
     const moviesStore = localStorage.getItem(this.moviesStoreKey);
-    if (!moviesStore) {
+    const search = this.props.match.params.query;
+    if (!!search) {
       this.props.loadMovies({
-        searchBy: this.searchByProps[0]
+        searchBy: this.searchByProps[0],
+        search
       });
-    } else {
+    } else if (!!moviesStore) {
       this.props.loadLocalStore(JSON.parse(moviesStore));
     }
   }
@@ -43,10 +45,11 @@ class App extends Component {
     }
     this.props.loadMovies({
       search: search,
-      searchBy: this.props.searchBy,
+      searchBy: this.props.searchBy || this.searchByProps[0],
       sortBy: this.props.sortBy,
       sortOrder: this.props.sortOrder
     });
+    this.props.history.push(search ? `/search/${search}` : "");
   }
 
   handleSearchByChange(searchBy) {
@@ -89,10 +92,11 @@ class App extends Component {
         <StatusStripeComponent
           handleSortByChange={this.handleSortByChange}
           count={this.props.total}
+          loading={this.props.loading}
           sortByProps={this.sortByProps}
           sortBy={this.props.sortBy}
         />
-        <MoviesComponent movies={this.props.data} />
+        <MoviesComponent movies={this.props.data} count={this.props.total} />
         <FooterComponent />
       </ErrorBoundary>
     );

@@ -1,12 +1,11 @@
 import axios from "axios";
-
-const GET_MOVIES_ENDPOINT = "https://reactjs-cdp.herokuapp.com/movies";
+import * as endpoints from "../../endpoints";
 
 export const LoadMovies = params => {
   return dispatch => {
     return dispatch({
       type: "LOAD_MOVIES",
-      payload: axios.get(GET_MOVIES_ENDPOINT, {
+      payload: axios.get(endpoints.GET_MOVIES_ENDPOINT, {
         params: { ...params }
       })
     });
