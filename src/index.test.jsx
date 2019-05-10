@@ -2,19 +2,19 @@ import ReactDOM from "react-dom";
 import { mock } from "jest";
 import { renderToDOM } from "./index";
 
-describe("test ReactDOM.render", () => {
-  const originalRender = ReactDOM.render;
+describe("test ReactDOM.hydrate", () => {
+  const originalRender = ReactDOM.hydrate;
   const originalGetElement = global.document.getElementById;
   beforeEach(() => {
     global.document.getElementById = () => true;
-    ReactDOM.render = jest.fn();
+    ReactDOM.hydrate = jest.fn();
   });
   afterAll(() => {
     global.document.getElementById = originalGetElement;
-    ReactDOM.render = originalRender;
+    ReactDOM.hydrate = originalRender;
   });
-  it("should call ReactDOM.render", () => {
+  it("should call ReactDOM.hydrate", () => {
     renderToDOM();
-    expect(ReactDOM.render).toHaveBeenCalled();
+    expect(ReactDOM.hydrate).toHaveBeenCalled();
   });
 });

@@ -20,7 +20,9 @@ class App extends Component {
   }
 
   componentWillMount() {
-    const moviesStore = localStorage.getItem(this.moviesStoreKey);
+    const moviesStore =
+      typeof window !== "undefined" &&
+      localStorage.getItem(this.moviesStoreKey);
     const search = this.props.match.params.query;
     if (!!search) {
       this.props.loadMovies({

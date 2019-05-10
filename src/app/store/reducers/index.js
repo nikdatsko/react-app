@@ -9,4 +9,11 @@ const rootReducer = combineReducers({
   movie: fromMovie.reducer
 });
 
-export const store = createStore(rootReducer, applyMiddleware(thunk, promise));
+const initialState =
+  typeof window !== "undefined" && window && window.__REDUX_STATE__;
+
+export const store = createStore(
+  rootReducer,
+  initialState,
+  applyMiddleware(thunk, promise)
+);

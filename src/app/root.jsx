@@ -1,14 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Provider } from "react-redux";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
+import { hot } from "react-hot-loader";
 import App from "./app";
 import MoviePage from "./movie-page/movie-page.component";
 import NotFound from "./not-found/not-found.component";
 
-const Root = ({ store }) => (
+const Root = ({ Router, location, context, store }) => (
   <Provider store={store}>
-    <Router>
+    <Router location={location} context={context}>
       <Switch>
         <Route exact path="/" component={App} />
         <Route path="/search/:query" component={App} />
@@ -23,7 +24,19 @@ const Root = ({ store }) => (
 );
 
 Root.propTypes = {
-  store: PropTypes.object.isRequired
+  Router: PropTypes.func.isRequired,
+  location: PropTypes.string,
+  context: PropTypes.shape({
+    url: PropTypes.string
+  }),
+  store: PropTypes.shape({
+    dispatch: PropTypes.func.isRequired,
+    getState: PropTypes.func.isRequired
+  }).isRequired
+};
+Root.defaultProps = {
+  location: null,
+  context: null
 };
 
-export default Root;
+export default hot(module)(Root);
