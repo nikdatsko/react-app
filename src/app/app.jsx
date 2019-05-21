@@ -6,7 +6,8 @@ import StatusStripeComponent from "./status-stripe/status-stripe.component";
 import MoviesComponent from "./movies/movies.component";
 import ErrorBoundary from "./error-boundary";
 import { connect } from "react-redux";
-import * as fromStore from "./store";
+import * as fromStore from "./store/actions";
+import store from "./store/reducers";
 
 class App extends Component {
   constructor() {
@@ -35,7 +36,7 @@ class App extends Component {
   }
 
   componentDidUpdate() {
-    const moviesState = fromStore.store.getState().movies;
+    const moviesState = store.getState().movies;
     localStorage.setItem(this.moviesStoreKey, JSON.stringify(moviesState));
   }
 

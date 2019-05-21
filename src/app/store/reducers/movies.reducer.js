@@ -1,5 +1,4 @@
-import * as fromActions from "../actions/movies.actions";
-import { ActionType } from "redux-promise-middleware";
+import { ActionType } from 'redux-promise-middleware';
 
 export const initialState = {
   data: {},
@@ -7,11 +6,11 @@ export const initialState = {
   offset: 0,
   sortBy: null,
   sortOrder: null,
-  search: "",
+  search: '',
   searchBy: null,
   filter: null,
   limit: null,
-  loading: false
+  loading: false,
 };
 
 export const reducer = (state = initialState, { type, payload }) => {
@@ -19,35 +18,36 @@ export const reducer = (state = initialState, { type, payload }) => {
     case `LOAD_MOVIES_${ActionType.Pending}`:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
 
-    case `LOAD_MOVIES_${ActionType.Fulfilled}`:
+    case `LOAD_MOVIES_${ActionType.Fulfilled}`: {
       const hashedData = payload.data.data.reduce(
         (acc, item) => ({
           ...acc,
-          [item.id]: item
+          [item.id]: item,
         }),
-        {}
+        {},
       );
       return {
         ...state,
         ...payload.data,
         ...payload.config.params,
         data: hashedData,
-        loading: false
+        loading: false,
       };
+    }
 
     case `LOAD_MOVIES_${ActionType.Rejected}`:
       return {
         ...state,
-        loading: false
+        loading: false,
       };
 
-    case "LOAD_LOCAL_STORE":
+    case 'LOAD_LOCAL_STORE':
       return {
         ...state,
-        ...payload
+        ...payload,
       };
 
     default:

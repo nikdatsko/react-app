@@ -7,7 +7,7 @@ import MoviePageHeader from "./movie-page-header/movie-page-header.component";
 import MoviesPageStripe from "./movies-page-stripe/movies-page-stripe.component";
 import ErrorBoundary from "../error-boundary";
 import { connect } from "react-redux";
-import * as fromStore from "../store";
+import * as fromStore from "../store/actions";
 
 class MoviePage extends Component {
   componentWillMount() {
