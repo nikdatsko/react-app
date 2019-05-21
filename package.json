@@ -8,22 +8,23 @@
     "build": "babel src/ -d lib/",
     "lint": "eslint ./ --cache --ignore-pattern .gitignore --fix",
     "prod": "cross-env NODE_ENV=production  node ./server",
-    "build:dev":
-      "rm -rf dist && webpack --mode development --config webpack.dev.config.js",
-    "build:prod":
-      "rm -rf dist && webpack --mode production --config webpack.prod.config.js",
+    "build:dev": "rm -rf dist && webpack --mode development --config webpack.dev.config.js",
+    "build:prod": "rm -rf dist && webpack --mode production --config webpack.prod.config.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage --colors",
     "cypress": "cypress open",
     "flow": "flow",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "storybook": "start-storybook"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nikdatsko/react-app.git"
   },
-  "keywords": ["react"],
+  "keywords": [
+    "react"
+  ],
   "author": "Nik Datsko",
   "license": "ISC",
   "bugs": {
@@ -62,11 +63,17 @@
     "webpack-hot-middleware": "^2.24.4",
     "webpack-hot-server-middleware": "^0.6.0"
   },
-  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"],
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
+    "@storybook/react": "^5.0.11",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.5.0",
