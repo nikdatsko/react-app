@@ -1,5 +1,6 @@
+// @flow
+
 import React from "react";
-import PropTypes from "prop-types";
 import { Provider } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { hot } from "react-hot-loader";
@@ -7,7 +8,23 @@ import App from "./app";
 import MoviePage from "./movie-page/movie-page.component";
 import NotFound from "./not-found/not-found.component";
 
-const Root = ({ Router, location, context, store }) => (
+type Context = {
+  url: number
+};
+
+type Store = {
+  dispatch: Function,
+  getState: Function
+};
+
+type RootType = {
+  Router: Function,
+  location?: string,
+  context?: Context,
+  store: Store
+};
+
+const Root = ({ Router, location, context, store }: RootType) => (
   <Provider store={store}>
     <Router location={location} context={context}>
       <Switch>
@@ -23,17 +40,6 @@ const Root = ({ Router, location, context, store }) => (
   </Provider>
 );
 
-Root.propTypes = {
-  Router: PropTypes.func.isRequired,
-  location: PropTypes.string,
-  context: PropTypes.shape({
-    url: PropTypes.string
-  }),
-  store: PropTypes.shape({
-    dispatch: PropTypes.func.isRequired,
-    getState: PropTypes.func.isRequired
-  }).isRequired
-};
 Root.defaultProps = {
   location: null,
   context: null

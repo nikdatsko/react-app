@@ -1,8 +1,10 @@
-import React from 'react';
-import { renderToString } from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom';
-import Root from './app/root';
-import store from './app/store/reducers';
+// @flow
+
+import React from "react";
+import { renderToString } from "react-dom/server";
+import { StaticRouter } from "react-router-dom";
+import Root from "./app/root";
+import store from "./app/store/reducers";
 
 function renderHTML(html, state) {
   return `
@@ -16,9 +18,9 @@ function renderHTML(html, state) {
         <body>
           <div id="root">${html}</div>
           <script>window.__REDUX_STATE__ = ${JSON.stringify(state).replace(
-    /</g,
-    '\\u003c',
-  )}</script>
+            /</g,
+            "\\u003c"
+          )}</script>
           <script src="/js/main.js"></script>
         </body>
       </html>
@@ -44,7 +46,7 @@ export default function serverRenderer() {
     // context.url will contain the URL to redirect to if a <Redirect> was used
     if (context.url) {
       res.writeHead(302, {
-        Location: context.url,
+        Location: context.url
       });
       res.end();
       return;
