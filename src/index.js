@@ -1,16 +1,15 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
-import Root from "./app/root";
-import * as fromStore from "./app/store";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import Root from './app/root';
+import store from './app/store/reducers';
 
-const root = document.getElementById("root");
+const root = document.getElementById('root');
 function renderToDOM() {
   ReactDOM.hydrate(
-    <Root store={fromStore.store} Router={BrowserRouter} />,
-    root || document.createElement("DIV")
+    <Root store={store} Router={BrowserRouter} />,
+    root || document.createElement('DIV'),
   );
 }
 renderToDOM();
-export { renderToDOM };
+export { renderToDOM as default };

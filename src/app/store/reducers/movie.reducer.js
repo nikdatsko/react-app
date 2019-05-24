@@ -1,22 +1,21 @@
-import * as fromActions from "../actions/movie.actions";
-import { ActionType } from "redux-promise-middleware";
+import { ActionType } from 'redux-promise-middleware';
 
 export const initialState = {
-  id: "",
-  title: "",
-  tagline: "",
-  vote_average: "",
-  vote_count: "",
-  release_date: "",
-  poster_path: "",
-  overview: "",
-  budget: "",
-  revenue: "",
+  id: '',
+  title: '',
+  tagline: '',
+  vote_average: '',
+  vote_count: '',
+  release_date: '',
+  poster_path: '',
+  overview: '',
+  budget: '',
+  revenue: '',
   genres: [],
-  runtime: "",
+  runtime: '',
   loading: false,
   genreMovies: [],
-  loadingGenreMovies: false
+  loadingGenreMovies: false,
 };
 
 export const reducer = (state = initialState, { type, payload }) => {
@@ -24,46 +23,47 @@ export const reducer = (state = initialState, { type, payload }) => {
     case `LOAD_MOVIE_${ActionType.Pending}`:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
 
     case `LOAD_MOVIE_${ActionType.Fulfilled}`:
       return {
         ...state,
         ...payload.data,
-        loading: false
+        loading: false,
       };
 
     case `LOAD_MOVIE_${ActionType.Rejected}`:
       return {
         ...state,
-        loading: false
+        loading: false,
       };
 
     case `LOAD_GENRE_${ActionType.Pending}`:
       return {
         ...state,
-        loadingGenreMovies: true
+        loadingGenreMovies: true,
       };
 
-    case `LOAD_GENRE_${ActionType.Fulfilled}`:
+    case `LOAD_GENRE_${ActionType.Fulfilled}`: {
       const genreMovies = payload.data.data.reduce(
         (acc, item) => ({
           ...acc,
-          [item.id]: item
+          [item.id]: item,
         }),
-        {}
+        {},
       );
       return {
         ...state,
-        genreMovies: genreMovies,
-        loadingGenreMovies: false
+        genreMovies,
+        loadingGenreMovies: false,
       };
+    }
 
     case `LOAD_GENRE_${ActionType.Rejected}`:
       return {
         ...state,
-        loadingGenreMovies: false
+        loadingGenreMovies: false,
       };
 
     default:

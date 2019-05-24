@@ -10,7 +10,6 @@ import configureStore from "redux-mock-store";
 import { Provider } from "react-redux";
 import { MemoryRouter as Router, Route } from "react-router-dom";
 import thunk from "redux-thunk";
-import * as fromStore from "./store";
 
 describe("App", () => {
   const movies = [

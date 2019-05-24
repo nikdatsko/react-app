@@ -6,7 +6,9 @@ import StatusStripeComponent from "./status-stripe/status-stripe.component";
 import MoviesComponent from "./movies/movies.component";
 import ErrorBoundary from "./error-boundary";
 import { connect } from "react-redux";
-import * as fromStore from "./store";
+import * as actions from "./store/actions";
+import * as selectors from "./store/selectors";
+import store from "./store/reducers";
 
 class App extends Component {
   constructor() {
@@ -35,7 +37,7 @@ class App extends Component {
   }
 
   componentDidUpdate() {
-    const moviesState = fromStore.store.getState().movies;
+    const moviesState = store.getState().movies;
     localStorage.setItem(this.moviesStoreKey, JSON.stringify(moviesState));
   }
 
@@ -105,16 +107,38 @@ class App extends Component {
   }
 }
 
-const mapStatesToProps = state => {
-  return { ...state.movies };
+const makeMapStateToProps = () => {
+  const getDataState = selectors.makeGetDataState();
+  const getTotalState = selectors.makeGetTotalState();
+  const getOffsetState = selectors.makeGetOffsetState();
+  const getSortByState = selectors.makeGetSortByState();
+  const getSortOrderState = selectors.makeGetSortOrderState();
+  const getSearchState = selectors.makeGetSearchState();
+  const getSearchByState = selectors.makeGetSearchByState();
+  const getFilterState = selectors.makeGetFilterState();
+  const getLimitState = selectors.makeGetLimitState();
+  const getLoadingState = selectors.makeGetLoadingState();
+  return state => ({
+    data: getDataState(state),
+    total: getTotalState(state),
+    offset: getOffsetState(state),
+    sortBy: getSortByState(state),
+    sortOrder: getSortOrderState(state),
+    search: getSearchState(state),
+    searchBy: getSearchByState(state),
+    filter: getFilterState(state),
+    limit: getLimitState(state),
+    loading: getLoadingState(state)
+  });
+  return mapStateToProps;
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     loadMovies: params =>
-      dispatch(fromStore.LoadMovies({ ...params, limit: 12 })),
-    loadLocalStore: params => dispatch(fromStore.LoadLocalStore({ ...params }))
+      dispatch(actions.LoadMovies({ ...params, limit: 12 })),
+    loadLocalStore: params => dispatch(actions.LoadLocalStore({ ...params }))
   };
 };
 
-export default connect(mapStatesToProps, mapDispatchToProps)(App);
+export default connect(makeMapStateToProps, mapDispatchToProps)(App);
